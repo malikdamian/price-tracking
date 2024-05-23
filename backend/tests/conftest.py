@@ -1,3 +1,7 @@
+from typing import Any, Generator
+
+import pytest
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -24,3 +28,9 @@ def override_get_db():
 
 
 app.dependency_overrides[get_db] = override_get_db
+
+
+@pytest.fixture
+def client() -> Generator[TestClient, Any, None]:
+    with TestClient(app) as client:
+        yield client
