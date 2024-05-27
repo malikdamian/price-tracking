@@ -1,13 +1,16 @@
-from typing import Annotated
+from typing import Annotated, Sequence
 
 from fastapi import APIRouter, Body, Depends, Query, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from backend.database import ProductResult, get_db
-from backend.schemas import (CreateProductResultModel,
-                             GetProductResultModel,
-                             PriceHistory)
+from backend.schemas import (
+    CreateProductResultModel,
+    GetAllProductResultModel,
+    GetProductResultModel,
+    PriceHistory,
+)
 
 router = APIRouter(tags=["Product result"])
 
@@ -78,3 +81,15 @@ def get_product_results(
             )
         )
     return list(product_dict.values())
+
+
+@router.get(
+    "/product-results-all",
+    status_code=status.HTTP_200_OK,
+    response_model=list[GetAllProductResultModel],
+    summary="Get all product results",
+)
+def get_all_product_results(db: Annotated[Session, Depends(get_db)]) -> Sequence[ProductResult]:
+    """Retrieve all product results from the database."""
+    product_results = db.execute(select(ProductResult)).scalars().all()
+    return product_results
