@@ -60,3 +60,12 @@ def test_get_all_product_results(client: TestClient, submit_product: ProductResu
     assert product_result["source"] == "test-source"
     assert product_result["search_text"] == "test-text"
     assert product_result["url"] == "www.test.com"
+
+
+def test_get_unique_search_text(client: TestClient, submit_product: ProductResult) -> None:
+    response = client.get("/unique-search-texts")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert data == ["test-text"]

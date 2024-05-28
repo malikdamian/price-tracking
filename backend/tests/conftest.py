@@ -3,9 +3,9 @@ from typing import Any, Generator
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session, sessionmaker
 
-from backend.database import Base, get_db, ProductResult
+from backend.database import Base, ProductResult, get_db
 from backend.main import app
 
 DATABASE_URL = "sqlite:///./test_db.db"
@@ -13,7 +13,7 @@ engine = create_engine(DATABASE_URL)
 
 TestingSessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
-# Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 
 def override_get_db():
