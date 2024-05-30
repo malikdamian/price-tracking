@@ -93,3 +93,16 @@ def get_all_product_results(db: Annotated[Session, Depends(get_db)]) -> Sequence
     """Retrieve all product results from the database."""
     product_results = db.execute(select(ProductResult)).scalars().all()
     return product_results
+
+
+@router.get(
+    "/unique-search-texts",
+    status_code=status.HTTP_200_OK,
+    response_model=list[str],
+    summary="Get all unique search texts",
+)
+def get_unique_search_text(db: Annotated[Session, Depends(get_db)]) -> Sequence[str]:
+    """Retrieve all unique search texts from the product results."""
+    query = select(ProductResult.search_text).distinct()
+    unique_search_text = db.execute(query).scalars().all()
+    return unique_search_text
