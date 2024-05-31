@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from backend.database import Base, ProductResult, get_db
+from backend.database import Base, ProductResult, TrackedProducts, get_db
 from backend.main import app
 
 DATABASE_URL = "sqlite:///./test_db.db"
@@ -64,3 +64,11 @@ def submit_product(session: Session) -> ProductResult:
     session.add(product_result)
     session.commit()
     return product_result
+
+
+@pytest.fixture
+def tracked_product(session: Session) -> TrackedProducts:
+    product = TrackedProducts(name="Test product")
+    session.add(product)
+    session.commit()
+    return product
