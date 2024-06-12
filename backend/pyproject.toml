@@ -18,3 +18,9 @@ warn_required_dynamic_aliases = true
 
 [tool.pylint]
 good-names = "db"
+
+[tool.isort]
+combine_as_imports = "true"
+include_trailing_comma = "true"
+force_grid_wrap = 0
+multi_line_output = 3
