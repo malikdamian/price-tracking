@@ -10,7 +10,7 @@ router = APIRouter(tags=["Tracked Product"])
 
 
 @router.post(
-    "/tracked-product",
+    "/tracked-products",
     status_code=status.HTTP_201_CREATED,
     response_model=dict[str, str | int],
     summary="Add tracked product",
@@ -30,7 +30,7 @@ def add_tracked_product(
 
 
 @router.patch(
-    "/tracked-product/{product_id}",
+    "/tracked-products/{product_id}",
     status_code=status.HTTP_200_OK,
     response_model=dict[str, str],
     summary="Toggle tracked product",
