@@ -1,9 +1,10 @@
-from typing import Annotated
+from typing import Annotated, Sequence
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from backend import schemas
 from backend.database import TrackedProducts, get_db
 
 router = APIRouter(tags=["Tracked Product"])
@@ -52,3 +53,15 @@ def toggle_tracked_product(
     db.commit()
 
     return {"message": "Tracked product toggled successfully"}
+
+
+@router.get(
+    "/tracked-products",
+    status_code=status.HTTP_200_OK,
+    response_model=list[schemas.GetTrackedProduct],
+    summary="Get all tracked products",
+
+)
+def get_tracked_products(db: Annotated[Session, Depends(get_db)]) -> Sequence[TrackedProducts]:
+    """Retrieve all tracked products from the database."""
+    return db.execute(select(TrackedProducts)).scalars().all()
