@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str
 
+    AMAZON_URL: str
+
     model_config = SettingsConfigDict(env_file=".env")
 
 
