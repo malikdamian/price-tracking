@@ -43,3 +43,10 @@ class GetAllProductResultModel(CustomModel):
     source: str
     search_text: str
     created: datetime
+
+
+class GetTrackedProduct(CustomModel):
+    id: int
+    name: str
+    tracked: bool
+    created: datetime
