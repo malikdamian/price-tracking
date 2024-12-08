@@ -30,3 +30,11 @@ def post_results(endpoint: str, product_result: ProductResult) -> dict[str, str]
 
     logger.info(f"Status code: {response.status_code}")
     return {"message": "Successfully posted results"}
+
+
+def save_results(results):
+    data = {"results": results}
+    file = os.path.join("Scraper", "results.json")
+    with open(file, "w") as f:
+        json.dump(data, f)
+
