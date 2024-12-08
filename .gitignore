@@ -4,3 +4,4 @@ venv/
 *.db
 .DS_Store
 __pycache__/
+auth.json

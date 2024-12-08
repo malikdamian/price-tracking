@@ -50,3 +50,8 @@ class GetTrackedProduct(CustomModel):
     name: str
     tracked: bool
     created: datetime
+
+
+class ScraperRequest(CustomModel):
+    url: str
+    search_text: str
